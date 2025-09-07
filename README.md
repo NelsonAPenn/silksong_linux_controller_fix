@@ -33,6 +33,10 @@ shows that the library provided is loaded. For Silksong, no system SDL is
 loaded, whether or not an SDL_DYNAMIC_API or SDL3_DYNAMIC_API environment
 variable is set.
 
+That being said, the only exported symbol from UnityPlayer.so is
+`PlayerMain(int, char**)`, so the SDL-related text in this binary may not be the
+place or the only place SDL is statically linked.
+
 ## `sdl2-jstest` results
 
 `sdl2-jstest` was used to test the trigger inputs of the controller. The trigger
