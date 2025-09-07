@@ -1,8 +1,9 @@
 ## Silksong on Linux controller fix
 
 The methods in this repository do not yet fix the issue. Currently it is a
-collection of information and things I've tried. If you are knowlegeable about
-SDL and/or Unity and this gives you any ideas, you are encouraged to contribute.
+collection of information and fixes that have been attempted. If you are
+knowlegeable about SDL and/or Unity and this gives you any ideas, you are
+encouraged to contribute.
 
 ## Background
 
