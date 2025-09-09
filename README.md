@@ -37,6 +37,11 @@ That being said, the only exported symbol from UnityPlayer.so is
 `PlayerMain(int, char**)`, so the SDL-related text in this binary may not be the
 place or the only place SDL is statically linked.
 
+## Potentially relevant Unity info
+
+- [description of files in packaged game on Linux](https://docs.unity3d.com/6000.2/Documentation/Manual/build-for-linux.html)
+- [legacy InputManager API](https://docs.unity3d.com/2022.3/Documentation/Manual/class-InputManager.html)
+
 ## `sdl2-jstest` results
 
 `sdl2-jstest` was used to test the trigger inputs of the controller. The trigger
@@ -54,6 +59,11 @@ cases, except for brief lapses of being off when the halfway point is hit.
 Another possible explanation of the behavior is that the controller
 configuration is not present in the statically linked version of SDL that is
 used. More on this below.
+
+Lastly, taking a wild guess: Hollow Knight and Silksong use the legacy
+InputManager API, specifically Input.GetButtonDown for the trigger axis. And
+going out on a limb, that doesn't work with with the trigger buttons of many
+8BitDo controllers.
 
 ## Possible solutions
 
