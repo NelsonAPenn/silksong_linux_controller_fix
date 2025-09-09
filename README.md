@@ -63,7 +63,16 @@ used. More on this below.
 Lastly, taking a wild guess: Hollow Knight and Silksong use the legacy
 InputManager API, specifically Input.GetButtonDown for the trigger axis. And
 going out on a limb, that doesn't work with with the trigger buttons of many
-8BitDo controllers.
+8BitDo controllers. One snippet from the Unity docs states this:
+
+> \[Axis values can be between\] –1 and 1 for joystick and keyboard input. The
+  neutral position for these axes is 0. Some types of controls, such as buttons
+  on a keyboard, aren’t sensitive to input intensity, so they can’t produce
+  values other than –1, 0, or 1.
+
+This sounds suspiciously reminiscent of the first hypothesis that the game
+expects the controller value to be 0 when it is not being pressed (but in fact,
+it is i16::MIN).
 
 ## Possible solutions
 
