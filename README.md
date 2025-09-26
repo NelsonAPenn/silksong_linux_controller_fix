@@ -1,9 +1,12 @@
 ## Silksong on Linux controller fix
 
-The methods in this repository do not yet fix the issue. Currently it is a
+See instructions from kakonema [here](https:/github.com/NelsonAPenn/silksong_linux_controller_fix/issues/1).
+I've tested this and it works! I plan to update the repository and perhaps provide a streamlined way to do this.
+
+~The methods in this repository do not yet fix the issue. Currently it is a
 collection of information and fixes that have been attempted. If you are
 knowlegeable about SDL and/or Unity and this gives you any ideas, you are
-encouraged to contribute.
+encouraged to contribute.~
 
 ## Background
 
