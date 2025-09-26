@@ -47,6 +47,41 @@ place or the only place SDL is statically linked.
 `sdl2-jstest` was used to test the trigger inputs of the controller. The trigger
 inputs were axes whose value range from i16::MIN to i16::MAX.
 
+## `jstest` results
+
+Same deal as `sdl2-jstest`.
+
+## `evtest` results
+
+Three `evdevs` appear:
+
+```
+/dev/input/event18:	8BitDo 8BitDo Ultimate 2C Wireless Controller Keyboard
+/dev/input/event19:	8BitDo 8BitDo Ultimate 2C Wireless Controller Mouse
+/dev/input/event20:	8BitDo Ultimate 2C Wireless Controller
+```
+
+It may be interesting to note that out of these, only event20 shows up without
+running as root.
+
+Events only appear on `event20` out of the above. The triggers report values
+from 0 to 255.
+
+## `hid-recorder` results
+
+`hid-recorder` finds two `hidraw` devices. One of them shows two event nodes:
+
+```
+# Event nodes:
+# - /dev/input/event18: "8BitDo 8BitDo Ultimate 2C Wireless Controller Keyboard"
+# - /dev/input/event19: "8BitDo 8BitDo Ultimate 2C Wireless Controller Mouse"
+```
+
+However, no events are detected for either `hidraw` device  no matter what
+button is pressed or axis is moved.
+
+Why? Not yet known, but worth investigation.
+
 ## Hypotheses about why the trigger acts the way it does
 
 One possible explanation of the behavior is that the trigger value is treated
@@ -96,3 +131,9 @@ configurations were tested, including the verbatim config resulting from
 in all tests. It could be that the correct controller configuration is still not
 being used after patching the binary, but it is also likely that this isn't the
 root cause of the issue given the results of testing.
+
+### Use `udev_hid_bpf` to modify HID reports and/or descriptor of controller
+
+Testing this is in progress; however, as mentioned above, no HID reports show up
+in `hid-recorder`, making it difficult to determine what modifications could or
+should be made.
