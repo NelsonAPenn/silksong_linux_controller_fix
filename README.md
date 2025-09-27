@@ -1,6 +1,6 @@
 ## Silksong on Linux controller fix
 
-See instructions from kakonema [here](https:/github.com/NelsonAPenn/silksong_linux_controller_fix/issues/1).
+See instructions from kakonema [here](https://github.com/NelsonAPenn/silksong_linux_controller_fix/issues/1).
 I've tested this and it works! I plan to update the repository and perhaps provide a streamlined way to do this.
 
 ~The methods in this repository do not yet fix the issue. Currently it is a
