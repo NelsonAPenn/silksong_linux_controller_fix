@@ -53,7 +53,7 @@ int main(int argc, char** argv)
     printf("\tTo use this controller in Silksong, set the following environment variable when running the game:\n\n");
     printf("\tSDL_GAMECONTROLLERCONFIG='%s'\n\n", mapping);
     printf("\tFor example, Steam launch options would be:\n\n");
-    printf("\tSDL_GAMECONTROLLER_CONFIG='%s' %%command%%\n\n", mapping);
+    printf("\tSDL_GAMECONTROLLERCONFIG='%s' %%command%%\n\n", mapping);
 
     SDL_CloseJoystick(joystick);
     SDL_free(mapping);
