@@ -46,9 +46,16 @@ C code is provided that simplifies this as much as possible.
 
 - Acquire the code provided in this repository, either by cloning or by downloading `get_controller_config.c` directly
 - `cd` into the folder in which you downloaded the C source file.
+- Compile the C source:
 
 ```sh
 cc -o get-controller-config get_controller_config.c -lSDL3
+```
+
+- Ensure the controller you want to use with Silksong is connected to you computer and not idle
+- Run the program
+
+```sh
 ./get-controller-config
 ```
 
