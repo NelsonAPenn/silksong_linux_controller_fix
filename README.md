@@ -56,4 +56,8 @@ This produces an output like the following:
 
 ![example get-controller-config output](./output_example.png)
 
+If you are using Steam, you can copy the provided launch options string into the
+Steam launch options. If you are running Silksong directly, you will need to set
+the environment variable for whatever command you are using to start it.
+
 Many thanks to kakonema for finding the fix. C code implementing this provided by me.
