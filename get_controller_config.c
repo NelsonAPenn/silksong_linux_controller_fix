@@ -45,7 +45,7 @@ int main(int argc, char** argv)
      * For SDL2 compatibility, CRC bytes must be zeroed out.
      */
     char* mapping = SDL_GetGamepadMappingForGUID(guid);
-    for (size_t guid_byte = 3; guid_byte < 5; guid_byte++)
+    for (size_t guid_byte = 2; guid_byte < 4; guid_byte++)
     {
       mapping[guid_byte * 2] = '0';
       mapping[guid_byte * 2 + 1] = '0';
