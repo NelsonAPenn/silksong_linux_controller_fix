@@ -1,13 +1,5 @@
 ## Silksong on Linux controller fix
 
-See instructions from kakonema [here](https://github.com/NelsonAPenn/silksong_linux_controller_fix/issues/1).
-I've tested this and it works! I plan to update the repository and perhaps provide a streamlined way to do this.
-
-~The methods in this repository do not yet fix the issue. Currently it is a
-collection of information and fixes that have been attempted. If you are
-knowlegeable about SDL and/or Unity and this gives you any ideas, you are
-encouraged to contribute.~
-
 ## Background
 
 On the native Linux version of Silksong, the game acts very strangely once you
@@ -36,107 +28,32 @@ shows that the library provided is loaded. For Silksong, no system SDL is
 loaded, whether or not an SDL_DYNAMIC_API or SDL3_DYNAMIC_API environment
 variable is set.
 
-That being said, the only exported symbol from UnityPlayer.so is
-`PlayerMain(int, char**)`, so the SDL-related text in this binary may not be the
-place or the only place SDL is statically linked.
+## Fix
 
-## Potentially relevant Unity info
 
-- [description of files in packaged game on Linux](https://docs.unity3d.com/6000.2/Documentation/Manual/build-for-linux.html)
-- [legacy InputManager API](https://docs.unity3d.com/2022.3/Documentation/Manual/class-InputManager.html)
+Requirements:
 
-## `sdl2-jstest` results
+- SDL3
+- gcc, or another C compiler
 
-`sdl2-jstest` was used to test the trigger inputs of the controller. The trigger
-inputs were axes whose value range from i16::MIN to i16::MAX.
+### 1. Disable NativeInput in Silksong:
 
-## `jstest` results
+In the file `~/.config/unity3d/Team\ Cherry/Hollow\ Knight\ Silksong/AppConfig.ini`, change `NativeInput=1` to `NativeInput=0`.
 
-Same deal as `sdl2-jstest`.
+### 2. Get SDL3 game controller config and modify it to be compatible with Silksong
 
-## `evtest` results
+C code is provided that simplifies this as much as possible.
 
-Three `evdevs` appear:
+- Acquire the code provided in this repository, either by cloning or by downloading `get_controller_config.c` directly
+- `cd` into the folder in which you downloaded the C source file.
 
-```
-/dev/input/event18:	8BitDo 8BitDo Ultimate 2C Wireless Controller Keyboard
-/dev/input/event19:	8BitDo 8BitDo Ultimate 2C Wireless Controller Mouse
-/dev/input/event20:	8BitDo Ultimate 2C Wireless Controller
+```sh
+cc -o get-controller-config get_controller_config.c -lSDL3
+./get-controller-config
 ```
 
-It may be interesting to note that out of these, only event20 shows up without
-running as root.
+This produces an output like the following:
 
-Events only appear on `event20` out of the above. The triggers report values
-from 0 to 255.
+![example get-controller-config output](./output_example.png)
 
-## `hid-recorder` results
-
-`hid-recorder` finds two `hidraw` devices. One of them shows two event nodes:
-
-```
-# Event nodes:
-# - /dev/input/event18: "8BitDo 8BitDo Ultimate 2C Wireless Controller Keyboard"
-# - /dev/input/event19: "8BitDo 8BitDo Ultimate 2C Wireless Controller Mouse"
-```
-
-However, no events are detected for either `hidraw` device  no matter what
-button is pressed or axis is moved.
-
-Why? Not yet known, but worth investigation.
-
-## Hypotheses about why the trigger acts the way it does
-
-One possible explanation of the behavior is that the trigger value is treated
-like a button instead of an axis. It's hypothetically initialized to 0, which
-explains the normal behavior before it has ever been pressed. After the first
-time the trigger is pulled, the axis value is nonzero in every case except for a
-pull that is exactly halfway. So, it is as if the button is being held in most
-cases, except for brief lapses of being off when the halfway point is hit.
-
-Another possible explanation of the behavior is that the controller
-configuration is not present in the statically linked version of SDL that is
-used. More on this below.
-
-Lastly, taking a wild guess: Hollow Knight and Silksong use the legacy
-InputManager API, specifically Input.GetButtonDown for the trigger axis. And
-going out on a limb, that doesn't work with with the trigger buttons of many
-8BitDo controllers. One snippet from the Unity docs states this:
-
-> \[Axis values can be between\] –1 and 1 for joystick and keyboard input. The
-  neutral position for these axes is 0. Some types of controls, such as buttons
-  on a keyboard, aren’t sensitive to input intensity, so they can’t produce
-  values other than –1, 0, or 1.
-
-This sounds suspiciously reminiscent of the first hypothesis that the game
-expects the controller value to be 0 when it is not being pressed (but in fact,
-it is i16::MIN).
-
-## Possible solutions
-
-### Creating a virtual joystick device
-
-If the first hypothesis is correct, the problem could be solved that translates
-the trigger axis to be a button instead. So if the key report is i16::MIN, the
-virtual button value is 0, otherwise it is 1. What would need to be figured out
-is how to create this virtual device and make sure the game ignores inputs from
-the original.
-
-### Adding the controller configuration into the static copy of SDL
-
-If the second hypothesis is correct, the problem could be solved by injecting
-the correct controller configuration into the binary. This was attempted: this
-repository contains a `controller_injector.c` program that goes through the SDL
-joystick database in the UnityPlayer.so binary and replaces configurations with
-a matching length with the desired controller configuration. Several
-configurations were tested, including the verbatim config resulting from
-`sdl2-jstest`. The game did not crash, but the same wacky behavior was exhibited
-in all tests. It could be that the correct controller configuration is still not
-being used after patching the binary, but it is also likely that this isn't the
-root cause of the issue given the results of testing.
-
-### Use `udev_hid_bpf` to modify HID reports and/or descriptor of controller
-
-Testing this is in progress; however, as mentioned above, no HID reports show up
-in `hid-recorder`, making it difficult to determine what modifications could or
-should be made.
+Many thanks to kakonema for finding the fix. C code implementing this provided by me.
