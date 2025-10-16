@@ -42,25 +42,13 @@ In the file `~/.config/unity3d/Team\ Cherry/Hollow\ Knight\ Silksong/AppConfig.i
 
 ### 2. Get SDL3 game controller config and modify it to be compatible with Silksong
 
-#### 8BitDo Ultimate 2C Wireless Controller
+#### For controllers with known configs
 
-If you have the 8BitDo Ultimate 2C Wireless Controller here's the config and you can skip the other steps:
+Check the [known configs page](./known_configs.md) to see if a config for your
+controller has already been recorded. If so and the config works, you can skip
+the compilation process and proceed to step 3.
 
-```sh
-# If you are using Steam, copy the following into Steam launch options
-SDL_GAMECONTROLLERCONFIG='03000000c82d00000a31000014010000,8BitDo Ultimate 2C Wireless Controller,a:b0,b:b1,x:b2,y:b3,back:b6,guide:b8,start:b7,leftstick:b9,rightstick:b10,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a3,righty:a4,lefttrigger:a2,righttrigger:a5,platform:Linux,' %command%
-# If you are running the game some other way, set the following environment variable when starting it
-SDL_GAMECONTROLLERCONFIG='03000000c82d00000a31000014010000,8BitDo Ultimate 2C Wireless Controller,a:b0,b:b1,x:b2,y:b3,back:b6,guide:b8,start:b7,leftstick:b9,rightstick:b10,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a3,righty:a4,lefttrigger:a2,righttrigger:a5,platform:Linux,'
-```
-
-### 8BitDo Ultimate 2C Wired Controller
-```
-SDL_GAMECONTROLLERCONFIG='03000000c82d00001d30000011010000,8BitDo Ultimate 2C Wired Controller,a:b0,b:b1,x:b3,y:b4,back:b10,guide:b12,start:b11,leftstick:b13,rightstick:b14,leftshoulder:b6,rightshoulder:b7,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a2,righty:a3,lefttrigger:a5,righttrigger:a4,platform:Linux,'
-```
-
-Be careful, because this config won't work for a model that is even slightly different. If you have a different controller that also exhibits weird behavior, follow the steps in "Other models".
-
-#### Other models
+#### For other models
 
 C code is provided that simplifies this as much as possible.
 
@@ -83,8 +71,19 @@ This produces an output like the following:
 
 ![example get-controller-config output](./output_example.png)
 
+### 3. Apply the configuration
+
 If you are using Steam, you can copy the provided launch options string into the
 Steam launch options. If you are running Silksong directly, you will need to set
 the environment variable for whatever command you are using to start it.
 
+### 4. Share your configuration (optional)
+
+If your controller was not already in the known configs list and you got a
+configuration that worked from running the program provided, feel free to share
+it and I will add it to the known configs list!
+
+## Acknowledgements
+
 Many thanks to kakonema for finding the fix. C code implementing this provided by me.
+
