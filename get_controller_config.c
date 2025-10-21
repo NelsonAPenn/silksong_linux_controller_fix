@@ -39,12 +39,18 @@ int main(int argc, char** argv)
     struct SDL_GUID guid = SDL_GetJoystickGUID(joystick);
     char buf[33];
     SDL_GUIDToString(guid, buf, 33);
-    printf("\033[34mJoystick %zu: %s\033[0m\n", i, name);
-
+    
     /*
-     * For SDL2 compatibility, CRC bytes must be zeroed out.
-     */
+    * For SDL2 compatibility, CRC bytes must be zeroed out.
+    */
     char* mapping = SDL_GetGamepadMappingForGUID(guid);
+    if (!mapping) 
+    {
+      printf("Joystick %zu (%s) could not be mapped: %s. Continuing", i, name, SDL_GetError());
+      continue; // Not a gamepad
+    }
+    
+    printf("\033[34mJoystick %zu: %s\033[0m\n", i, name);
     for (size_t guid_byte = 2; guid_byte < 4; guid_byte++)
     {
       mapping[guid_byte * 2] = '0';
