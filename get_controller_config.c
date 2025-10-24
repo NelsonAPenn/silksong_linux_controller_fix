@@ -41,8 +41,8 @@ int main(int argc, char** argv)
     SDL_GUIDToString(guid, buf, 33);
     
     /*
-    * For SDL2 compatibility, CRC bytes must be zeroed out.
-    */
+     * For SDL2 compatibility, CRC bytes must be zeroed out.
+     */
     char* mapping = SDL_GetGamepadMappingForGUID(guid);
     if (!mapping) 
     {
