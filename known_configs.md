@@ -65,3 +65,17 @@ Just the environment variable:
 ```sh
 SDL_GAMECONTROLLERCONFIG='030000005e040000120b000005050000,Xbox Series X Controller,a:b0,b:b1,x:b2,y:b3,back:b6,guide:b8,start:b7,leftstick:b9,rightstick:b10,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,misc1:b11,leftx:a0,lefty:a1,rightx:a3,righty:a4,lefttrigger:a2,righttrigger:a5,platform:Linux,'
 ```
+
+## PS4 Controller
+
+Steam launch options:
+
+```sh
+SDL_GAMECONTROLLERCONFIG='030000004c050000c405000000016800,PS4 Controller,a:b0,b:b1,back:b4,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b5,leftshoulder:b9,leftstick:b7,lefttrigger:a4,leftx:a0,lefty:a1,rightshoulder:b10,rightstick:b8,righttrigger:a5,rightx:a2,righty:a3,start:b6,x:b2,y:b3,touchpad:b11,crc:e58f,platform:Linux,' %command%
+```
+
+Just the environment variable:
+
+```sh
+SDL_GAMECONTROLLERCONFIG='030000004c050000c405000000016800,PS4 Controller,a:b0,b:b1,back:b4,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b5,leftshoulder:b9,leftstick:b7,lefttrigger:a4,leftx:a0,lefty:a1,rightshoulder:b10,rightstick:b8,righttrigger:a5,rightx:a2,righty:a3,start:b6,x:b2,y:b3,touchpad:b11,crc:e58f,platform:Linux,'
+```
